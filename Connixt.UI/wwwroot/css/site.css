@@ -1,0 +1,17 @@
+.object-fit-cover {
+    object-fit: cover;
+}
+
+.w-75 {
+    max-width: 520px;
+}
+
+@media (max-width: 767.98px) {
+    .w-75 {
+        width: 90% !important;
+    }
+}
+
+body {
+    background-color: #f7f7f7;
+}
