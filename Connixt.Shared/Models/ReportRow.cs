@@ -9,16 +9,15 @@ namespace Connixt.Shared.Models
 {
     public class ReportRow
     {
-        [XmlElement("ZHOSTID")]
-        public string? ZHOSTID { get; set; }
+        public string ZHOSTID { get; set; } = string.Empty;
+        public string ZDIDDATANUM { get; set; } = string.Empty;
+        public string ZDIDDATAST { get; set; } = string.Empty;
+        public string ZDIDDESC { get; set; } = string.Empty;
 
-        [XmlElement("ZDIDDATANUM")]
-        public string? ZDIDDATANUM { get; set; }
-
-        [XmlElement("ZDIDDATAST")]
-        public string? ZDIDDATAST { get; set; }
-
-        [XmlElement("ZDIDDESC")]
-        public string? ZDIDDESC { get; set; }
+        // Fields you were missing (added)
+        public string ZDIDCONFIGNUM { get; set; }
+        public string ZREPSTATUS { get; set; }
+        public string ZETA { get; set; }
     }
+
 }

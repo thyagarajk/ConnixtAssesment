@@ -11,14 +11,40 @@ public class ReportController : Controller
     private readonly IApiClient _api;
     public ReportController(IApiClient api) => _api = api;
 
+    //public async Task<IActionResult> Index(int page = 0, int pageSize = 20)
+    //{
+    //    var username = HttpContext.Session.GetString("username");
+    //    if (string.IsNullOrEmpty(username)) return RedirectToAction("Login", "Account");
+
+    //    // In this simple flow we use test password from env or constant (avoid storing real pwd)
+    //    var password = Environment.GetEnvironmentVariable("CONNIX_TEST_PASSWORD") ?? "#ABCDE12345$";
+    //    var list = await _api.GetReportsAsync(username, password, page, pageSize);
+    //    return View(list);
+    //}
+
     public async Task<IActionResult> Index(int page = 0, int pageSize = 20)
     {
         var username = HttpContext.Session.GetString("username");
-        if (string.IsNullOrEmpty(username)) return RedirectToAction("Login", "Account");
+        if (string.IsNullOrEmpty(username))
+            return RedirectToAction("Login", "Account");
 
-        // In this simple flow we use test password from env or constant (avoid storing real pwd)
         var password = Environment.GetEnvironmentVariable("CONNIX_TEST_PASSWORD") ?? "#ABCDE12345$";
-        var list = await _api.GetReportsAsync(username, password, page, pageSize);
+
+        ReportListResponse list;
+        try
+        {
+            list = await _api.GetReportsAsync(username, password, page, pageSize);
+            list.Rows = list.Rows ?? new List<ReportRow>();
+        }
+        catch (Exception ex)
+        {
+           // _logger?.LogError(ex, "Error fetching reports for {User}", username);
+            // show a friendly message in the UI (or empty result)
+            ModelState.AddModelError("", "Unable to load reports at this time.");
+            list = new ReportListResponse { Total = 0, Rows = new List<ReportRow>() };
+        }
+
         return View(list);
     }
+
 }

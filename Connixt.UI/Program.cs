@@ -36,6 +36,12 @@ builder.Services.AddHttpClient<IApiClient, ApiClient>(client =>
     client.Timeout = TimeSpan.FromSeconds(300);
 });
 
+builder.Services.AddDistributedMemoryCache();
+builder.Services.AddSession(options => {
+    options.IdleTimeout = TimeSpan.FromMinutes(30);
+    options.Cookie.HttpOnly = true;
+});
+
 var app = builder.Build();
 
 if (!app.Environment.IsDevelopment()) app.UseExceptionHandler("/Home/Error");
