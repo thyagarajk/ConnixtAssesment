@@ -13,6 +13,7 @@ public class ZCIXMXFIMQDIDREPORTLISTResponse
     public int TotalRowCount { get; set; }
 
     // IMPORTANT: Add this property so you can read the XML table block
-    [XmlElement("ZCIXMXFIMQDIDREPORTLISTTBL")]
-    public XmlElement ZCIXMXFIMQDIDREPORTLISTTBL { get; set; }
+    [XmlAnyElement("ZCIXMXFIMQDIDREPORTLISTTBL")]
+    public XmlElement[] ZCIXMXFIMQDIDREPORTLISTTBL { get; set; }
+
 }

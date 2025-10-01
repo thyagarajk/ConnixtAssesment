@@ -1,6 +1,7 @@
 ﻿using Connixt.Shared.Models;
 using Connixt.Shared.SoapDtos;
 using System.Data;
+using System.Xml;
 using System.Xml.Linq;
 
 namespace Connixt.Api.Services;
@@ -191,10 +192,25 @@ public class SoapService : ISoapService
             ZUSERNAME = username,
             ZPASSWORD = password,
             ZAPPID = "ANDROIDPHONEFM",
+            ZPARTNERID="",
             ZTRANSID = "DIDTRACK",
             ZTRANSTYPE = "INSPECTION",
             PageNumber = page,
-            PageSize = pageSize
+            PageSize = pageSize,
+            SearchFilter = "",
+            sort = "",
+            ZSORTBY = "",
+            ZSORTDIR = "",
+            F1 = "",
+            F2 = "",
+            F3 = "",
+            F4 = "",
+            F5 = "",
+            F6 = "",
+            F7 = "",
+            F8 = "",
+            F9 = "",
+            F10 = ""
         };
 
         // Call SOAP
@@ -203,119 +219,41 @@ public class SoapService : ISoapService
             ZCIXMXFIMQDIDREPORTLISTResponse>(
             "ZCIXMXFIMQDIDREPORTLIST", req);
 
-        // Prepare return object
-        //var result = new ReportListResponse
-        //{
-        //    Total = resp?.TotalRowCount ?? 0,
-        //    Rows = new List<ReportRow>()
-        //};
-
-
         var result = new ReportListResponse
         {
             Total = resp?.TotalRowCount ?? 0,
             Rows = new List<ReportRow>()
         };
 
-        // Prefer parsing ZCIXMXFIMQDIDREPORTLISTTBL if available
-        if (!string.IsNullOrWhiteSpace(resp?.ZCIXMXFIMQDIDREPORTLISTTBL?.OuterXml))
+        var tblXml = resp.ZCIXMXFIMQDIDREPORTLISTTBL?.FirstOrDefault()?.OuterXml;
+        if (!string.IsNullOrEmpty(tblXml))
         {
-            var xml = resp.ZCIXMXFIMQDIDREPORTLISTTBL.OuterXml;
-            XDocument xdoc;
-            try { xdoc = XDocument.Parse(xml); }
-            catch { xdoc = XDocument.Parse($"<root>{xml}</root>"); }
+            var xdoc = XDocument.Parse(tblXml);
 
-            var rowNodes = xdoc.Descendants()
-                .Where(n => n.Name.LocalName == "ZCIXMXFIMQDIDREPORTLIST")
-                .ToList();
+            XNamespace diffgr = "urn:schemas-microsoft-com:xml-diffgram-v1";
 
-            foreach (var node in rowNodes)
+            var rows = xdoc.Descendants(diffgr + "diffgram")
+                           .Descendants("ZCIXMXFIMQDIDREPORTLIST");
+
+            foreach (var node in rows)
             {
                 var rr = new ReportRow
                 {
-                    ZHOSTID = node.Element("ZHOSTID")?.Value ?? string.Empty,
-                    ZDIDDATANUM = node.Element("ZDIDDATANUM")?.Value ?? string.Empty,
-                    ZDIDDATAST = node.Element("ZDIDDATAST")?.Value ?? string.Empty,
-                    ZDIDDESC = node.Element("ZDIDDESC")?.Value ?? string.Empty
+                    ZHOSTID = node.Element("ZHOSTID")?.Value,
+                    ZDIDDATANUM = node.Element("ZDIDDATANUM")?.Value,
+                    ZDIDDATAST = node.Element("ZDIDDATAST")?.Value,
+                    ZDIDDESC = node.Element("ZDIDDESC")?.Value,
+                    ZREPSTATUS = node.Element("ZREPSTATUS")?.Value,
+                    ZETA = node.Element("ZETA")?.Value
                 };
                 result.Rows.Add(rr);
             }
         }
 
-        // Fallback: try parsing Result property if no rows found
-        if (!result.Rows.Any() && !string.IsNullOrWhiteSpace(resp?.Result))
-        {
-            var candidate = resp.Result.Trim();
-            if (candidate.StartsWith("<"))
-            {
-                XDocument xdoc;
-                try { xdoc = XDocument.Parse(candidate); }
-                catch { xdoc = XDocument.Parse($"<root>{candidate}</root>"); }
 
-                var rowNodes = xdoc.Descendants()
-                    .Where(n => n.Elements().Any(e => e.Name.LocalName == "ZHOSTID"))
-                    .ToList();
-
-                foreach (var node in rowNodes)
-                {
-                    var rr = new ReportRow
-                    {
-                        ZHOSTID = node.Element("ZHOSTID")?.Value ?? string.Empty,
-                        ZDIDDATANUM = node.Element("ZDIDDATANUM")?.Value ?? string.Empty,
-                        ZDIDDATAST = node.Element("ZDIDDATAST")?.Value ?? string.Empty,
-                        ZDIDDESC = node.Element("ZDIDDESC")?.Value ?? string.Empty
-                    };
-                    result.Rows.Add(rr);
-                }
-            }
-        }
 
         return result;
 
-
-
-        //// Try get XML string from response
-        //var xml = resp?.Result?.ToString();
-        //if (string.IsNullOrWhiteSpace(xml))
-        //    return result; // return empty list if no data
-        //                   // Debug / log
-        //System.Diagnostics.Debug.WriteLine("SOAP XML >>> " + xml);
-        //try
-        //{
-        //    // Read into dataset
-        //    var ds = new DataSet();
-        //    using (var reader = new StringReader(xml))
-        //    {
-        //        ds.ReadXml(reader);
-        //    }
-
-        //    var table = ds.Tables["ZCIXMXFIMQDIDREPORTLIST"];
-        //    if (table != null)
-        //    {
-        //        foreach (DataRow row in table.Rows)
-        //        {
-        //            var rr = new ReportRow
-        //            {
-        //                ZHOSTID = row["ZHOSTID"]?.ToString(),
-        //                ZDIDDATANUM = row["ZDIDDATANUM"]?.ToString(),
-        //                ZDIDDATAST = row["ZDIDDATAST"]?.ToString(),
-        //                ZDIDDESC = row["ZDIDDESC"]?.ToString(),
-        //                ZDIDCONFIGNUM = row["ZDIDCONFIGNUM"]?.ToString(),
-        //                ZREPSTATUS = row["ZREPSTATUS"]?.ToString(),
-        //                ZETA = row["ZETA"]?.ToString()
-        //            };
-
-        //            result.Rows.Add(rr);
-        //        }s
-        //    }
-        //}
-        //catch (Exception ex)
-        //{
-        //    // TODO: log exception (_logger.LogError if available)
-        //    // but don’t throw, just return empty
-        //}
-
-        //return result;
     }
 
 }
