@@ -10,7 +10,6 @@ public class ReportsController : ControllerBase
     private readonly ISoapService _soap;
     public ReportsController(ISoapService soap) => _soap = soap;
 
-    // ReportsController (API)
     [HttpGet]
     public async Task<IActionResult> Get([FromQuery] string username, [FromQuery] string password, [FromQuery] int page = 0, [FromQuery] int pageSize = 20)
     {

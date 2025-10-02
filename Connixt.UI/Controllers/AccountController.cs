@@ -37,7 +37,7 @@ public class AccountController : Controller
 
         await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal,
             new AuthenticationProperties { IsPersistent = false, ExpiresUtc = DateTimeOffset.UtcNow.AddMinutes(20) });
-        // also add username to session
+        // add username to session
         HttpContext.Session.SetString("username", vm.Username!);
 
         return RedirectToAction("Index", "Report");

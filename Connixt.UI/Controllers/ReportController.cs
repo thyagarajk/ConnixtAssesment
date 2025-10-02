@@ -11,7 +11,7 @@ public class ReportController : Controller
     private readonly IApiClient _api;
     public ReportController(IApiClient api) => _api = api;
 
-    public async Task<IActionResult> Index(int page = 0, int pageSize = 20) // default 1
+    public async Task<IActionResult> Index(int page = 0, int pageSize = 20) 
     {
         var username = HttpContext.Session.GetString("username");
         if (string.IsNullOrEmpty(username)) return RedirectToAction("Login", "Account");

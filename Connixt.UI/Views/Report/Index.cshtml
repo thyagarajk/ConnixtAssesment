@@ -2,47 +2,84 @@
 @{
     ViewData["Title"] = "Reports";
 }
+
 <div class="container-fluid mt-3">
-    <div class="row align-items-center mb-2">
-        <div class="col">
-            <img src="~/img/top-left.png" style="height:40px" />
+
+    <!-- Submenu Tabs -->
+    <div class="submenu-bar d-flex align-items-center gap-3 px-3 py-2"
+         style="background:#f2f3f7; border:1px solid #ddd; border-bottom:none;">
+        <button class="btn btn-sm fw-bold text-warning border-0 bg-transparent">WO STATUS</button>
+        <button class="btn btn-sm text-secondary border-0 bg-transparent">MAP VIEW</button>
+        <button class="btn btn-sm text-secondary border-0 bg-transparent">CREATE</button>
+        <button class="btn btn-sm text-secondary border-0 bg-transparent">UPDATE</button>
+        <button class="btn btn-sm text-secondary border-0 bg-transparent">ASSIGN</button>
+        <button class="btn btn-sm text-secondary border-0 bg-transparent">DELETE</button>
+        <button class="btn btn-sm text-secondary border-0 bg-transparent">CALENDAR VIEW</button>
+        <button class="btn btn-sm text-secondary border-0 bg-transparent">MY WORK QUEUE</button>
+    </div>
+
+    <!-- Filter Bar -->
+    <div class="d-flex align-items-center justify-content-between px-3 py-2"
+         style="background:#f8f9fb; border:1px solid #ddd; border-top:none;">
+        <div class="d-flex align-items-center gap-2 flex-nowrap">
+            <select class="form-select form-select-sm" style="max-width:140px;">
+                <option>Select Field</option>
+            </select>
+
+            <select class="form-select form-select-sm" style="max-width:100px;">
+                <option>like</option>
+                <option>equals</option>
+                <option>contains</option>
+            </select>
+
+            <select class="form-select form-select-sm" style="max-width:140px;">
+                <option>All WO</option>
+            </select>
+
+            <input type="text" class="form-control form-control-sm" placeholder="Search..."
+                   style="max-width:220px;" />
+
+            <button class="btn btn-sm btn-primary px-3">Search</button>
+            <button class="btn btn-sm btn-info px-3">+</button>
+            <button class="btn btn-sm btn-secondary px-3">Reset</button>
         </div>
-        <div class="col text-end">
-            <img src="~/img/top-right.png" style="height:40px" />
+
+        <div>
+            <strong style="font-size:14px;">TOTAL COUNT: @Model.Total</strong>
         </div>
     </div>
 
-    <div class="row mb-2">
-        <div class="col text-end">
-            <strong>Rows: @Model.Total</strong>
-        </div>
+    <!-- Section Title Bar -->
+    <div class="px-3 py-2 mt-2" style="background:#2c3e50; color:#fff; font-weight:bold; font-size:14px;">
+        WO / JOB - WO STATUS
     </div>
 
-    <div class="row">
-        <div class="col">
-            <div class="table-responsive">
-                <table class="table table-striped table-bordered">
-                    <thead class="table-dark">
+    <!-- Report Table -->
+    <div class="report-container mt-1 p-2"
+         style="background:#fff; border:1px solid #ddd; border-radius:6px; box-shadow:0 2px 6px rgba(0,0,0,0.05);">
+
+        <div class="table-responsive"
+             style="max-height:420px; overflow-y:auto; border-top:1px solid #ddd; margin-top:2px;">
+            <table class="table table-striped table-bordered mb-0" style="border-collapse:collapse;">
+                <thead style="position: sticky; top: 0; z-index: 1020; background:#2c3e50; color:#fff;">
+                    <tr>
+                        <th scope="col">ZHOSTID</th>
+                        <th scope="col">ZDIDDATANUM</th>
+                        <th scope="col">ZDIDDATAST</th>
+                        <th scope="col">ZDIDDESC</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var r in Model.Rows)
+                    {
                         <tr>
-                            <th>ZHOSTID</th>
-                            <th>ZDIDDATANUM</th>
-                            <th>ZDIDDATAST</th>
-                            <th>ZDIDDESC</th>
+                            <td>@r.ZHOSTID</td>
+                            <td>@r.ZDIDDATANUM</td>
+                            <td>@r.ZDIDDATAST</td>
+                            <td>@r.ZDIDDESC</td>
                         </tr>
-                    </thead>
-                    <tbody>
-                        @foreach (var r in Model.Rows)
-                        {
-                            <tr>
-                                <td>@r.ZHOSTID</td>
-                                <td>@r.ZDIDDATANUM</td>
-                                <td>@r.ZDIDDATAST</td>
-                                <td>@r.ZDIDDESC</td>
-                            </tr>
-                        }
-                    </tbody>
-                </table>
-            </div>
+                    }
+                </tbody>
+            </table>
         </div>
     </div>
-</div>

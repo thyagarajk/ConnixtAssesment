@@ -13,8 +13,6 @@ namespace Connixt.Shared.Models
         public string ZDIDDATANUM { get; set; } = string.Empty;
         public string ZDIDDATAST { get; set; } = string.Empty;
         public string ZDIDDESC { get; set; } = string.Empty;
-
-        // Fields you were missing (added)
         public string ZDIDCONFIGNUM { get; set; }
         public string ZREPSTATUS { get; set; }
         public string ZETA { get; set; }

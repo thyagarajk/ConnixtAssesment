@@ -16,15 +16,12 @@ namespace Connixt.Shared.SoapDtos
         [XmlElement("ZPARTNERID")] public string? ZPARTNERID { get; set; }
         [XmlElement("ZTRANSID")] public string? ZTRANSID { get; set; }
         [XmlElement("ZTRANSTYPE")] public string? ZTRANSTYPE { get; set; }
-
         [XmlElement("PageNumber")] public int? PageNumber { get; set; }
         [XmlElement("PageSize")] public int? PageSize { get; set; }
-
         [XmlElement("SearchFilter")] public string? SearchFilter { get; set; }
         [XmlElement("sort")] public string? sort { get; set; }
         [XmlElement("ZSORTBY")] public string? ZSORTBY { get; set; }
         [XmlElement("ZSORTDIR")] public string? ZSORTDIR { get; set; }
-
         [XmlElement("F1")] public string? F1 { get; set; }
         [XmlElement("F2")] public string? F2 { get; set; }
         [XmlElement("F3")] public string? F3 { get; set; }

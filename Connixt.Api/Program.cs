@@ -28,7 +28,7 @@ builder.Services.AddCors(options =>
 {
     options.AddPolicy("UiPolicy", pb =>
     {
-        pb.WithOrigins("https://localhost:5002", "http://localhost:5002") // update if needed
+        pb.WithOrigins("https://localhost:5002", "http://localhost:5002") 
           .AllowAnyHeader()
           .AllowAnyMethod();
     });
@@ -55,7 +55,7 @@ app.UseSwagger();
 app.UseSwaggerUI(c =>
 {
     c.SwaggerEndpoint("/swagger/v1/swagger.json", "API V1");
-    c.RoutePrefix = "swagger";  // This is the default; leaving empty serves at root
+    c.RoutePrefix = "swagger"; 
 });
 app.MapControllers();
 

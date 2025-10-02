@@ -17,7 +17,6 @@ public class SoapClient : ISoapClient
         _http = http;
         _log = log;
         _baseUrl = "https://dev.connixtapps.com/interviewws/cixmxfws.asmx";
-            //cfg["Connixt:SoapBaseUrl"] ?? throw new ArgumentException("Connixt:SoapBaseUrl missing");
     }
 
     public async Task<TResponse> InvokeAsync<TRequest, TResponse>(string action, TRequest request, SoapVersion version = SoapVersion.Soap11)

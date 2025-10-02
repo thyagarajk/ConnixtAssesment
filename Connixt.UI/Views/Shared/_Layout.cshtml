@@ -4,46 +4,82 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - Connixt.UI</title>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/Connixt.UI.styles.css" asp-append-version="true" />
 </head>
-<body>
+<body class="d-flex flex-column min-vh-100">
+
+    <!-- NAVBAR -->
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Connixt.UI</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
+        <nav class="navbar navbar-expand-lg navbar-dark" style="background-color:#2c3e50; height:50px;">
+            <div class="container-fluid justify-content-between">
+
+                <!-- Logo + Menu + Right all in one line -->
+                <div class="d-flex align-items-center w-100 justify-content-between">
+
+                    <!-- Left: Logo -->
+                    <div class="d-flex align-items-center">
+                        <span class="fw-bold text-white">CONNI<span style="color:#007bff;">X</span><span style="color:orange;">T</span></span>
+                    </div>
+
+                    <!-- Center: Menu -->
+                    <ul class="navbar-nav d-flex flex-row mx-3" style="font-size:14px; gap:18px;">
+                        <li class="nav-item"><a class="nav-link text-white" href="#">HOME</a></li>
+                        <li class="nav-item"><a class="nav-link text-white" href="#">WO / JOB</a></li>
+                        <li class="nav-item"><a class="nav-link text-white" href="#">FIELD REPORT</a></li>
+                        <li class="nav-item"><a class="nav-link text-white" href="#">ASSET</a></li>
+                        <li class="nav-item"><a class="nav-link text-white" href="#">AMS</a></li
+                        <li class="nav-item"><a class="nav-link text-white" href="#">ANALYTICS</a></li>
+                        <li class="nav-item"><a class="nav-link text-white" href="#">WMX</a></li>
+                        <li class="nav-item"><a class="nav-link text-white" href="#">ROI</a></li>
+                        <li class="nav-item"><a class="nav-link text-white" href="#">SUPPORT</a></li>
+                        <li class="nav-item"><a class="nav-link text-white" href="#">RESET PWD.</a></li>
+                        <li class="nav-item"><a class="nav-link text-white" href="#">LOG OFF</a></li>
                     </ul>
+
+                    <!-- Right: User -->
+                    <div class="d-flex align-items-center">
+                        <span class="fw-bold text-white me-2">DAVID@ACMET</span>
+                        <img src="~/Images/user.jpg" alt="User" style="height:24px;" class="rounded-circle" />
+                    </div>
                 </div>
+
             </div>
         </nav>
     </header>
-    <div class="container">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
-    </div>
 
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2025 - Connixt.UI - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+    <!-- MAIN -->
+    <main class="flex-grow-1 container-fluid py-3">
+        @RenderBody()
+    </main>
+
+ <!-- FOOTER -->
+<footer class="bg-light border-top py-2 mt-auto">
+    <div class="container-fluid d-flex justify-content-between align-items-center">
+        
+        <!-- Left -->
+        <div class="small text-muted">
+            © 2025 - Connixt Inc., All Rights Reserved.
         </div>
-    </footer>
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
+
+        <!-- Center -->
+        <div class="fw-bold" style="letter-spacing:1px;">
+            <span style="color:#007bff;">CONNI</span><span style="color:orange;">XT</span>
+        </div>
+
+        <!-- Right -->
+        <div class="small">
+            <a href="#">CPSA</a> |
+            <a href="#">Privacy Policy</a> |
+            <a href="#">Terms of Use</a> |
+            Powered by Connixt Inc
+        </div>
+    </div>
+</footer>
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
